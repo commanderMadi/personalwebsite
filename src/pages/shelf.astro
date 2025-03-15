@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+---
+
+<BaseLayout>
+  <div class='years-container mt-10 mb-10 mx-auto'>
+    <div class='divider-container'>
+      <div class='divider mb-3 mt-3'>
+        <span>2025</span>
+      </div>
+      <p class='text-2xl text-gray-400 mb-4 mt-4'>Currently Reading</p>
+      <p class='text-gray-900 text-lg lg:text-3xl'><span class='text-blue-600'>CSS Secrets</span> By Lea Verou</p>
+      <p class='text-2xl text-gray-400 mb-4 mt-4'>Read</p>
+      <p class='text-gray-900 text-lg lg:text-3xl'>
+        <span class='text-blue-600'>Database Internals</span> By Alex Petrov
+      </p>
+
+      <p class='text-gray-900 text-lg lg:text-3xl'><span class='text-blue-600'>Second Brain</span> By Tiago Forte</p>
+
+      <div class='divider mb-3 mt-3'>
+        <span>2024</span>
+      </div>
+      <p class='text-gray-900 text-lg lg:text-3xl'>
+        <span class='text-blue-600'>Eloquent JavaScript</span> By Marijn Haverbeke
+      </p>
+      <p class='text-gray-900 text-lg lg:text-3xl'>
+        <span class='text-blue-600'>Course Design Formula</span> By Rebecca Frost
+      </p>
+      <div class='divider mb-3 mt-3'>
+        <span>2023</span>
+      </div>
+      <p class='text-gray-900 text-lg lg:text-3xl'>
+        <span class='text-blue-600'>You Don't know JavaScript Series</span> By Kyle Simpson
+      </p>
+      <p class='text-gray-900 text-lg lg:text-3xl'>
+        <span class='text-blue-600'>Think Like a Programmer</span> By V. Anton Spraul
+      </p>
+    </div>
+  </div>
+
+  <style>
+    .divider-container {
+      width: 100%;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      color: #718096; /* text-gray-600 */
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #e2e8f0; /* border-gray-300 */
+    }
+
+    .divider::before {
+      margin-right: 1rem;
+    }
+
+    .divider::after {
+      margin-left: 1rem;
+    }
+
+    .divider span {
+      font-size: 1.25rem;
+      font-weight: 600;
+      padding: 0 1rem;
+    }
+  </style>
+</BaseLayout>
