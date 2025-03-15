@@ -1,7 +1,7 @@
 ---
 import HomePageContentSection from '../components/HomePageContentSection.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
-const aboutTitle = 'Hello there! 👋'
+const aboutTitle = 'Hello there!'
 const someStatsTitle = 'My Employer & Background'
 const servicesProvidedTitle = 'Services I Offer'
 ---
@@ -53,8 +53,17 @@ const servicesProvidedTitle = 'Services I Offer'
     transform: translateX(-100%); /* Start from left (outside the viewport) */
     opacity: 0; /* Start invisible */
     animation:
-      slide-in 1s forwards,
-      gradient-fade 2s forwards 0.5s; /* First slide in, then animate gradient */
+      slide-in 0.8s forwards,
+      gradient-fade 3s forwards 0.5s; /* First slide in, then animate gradient */
+  }
+  :global(.first-section-title)::after {
+    content: ' 👋';
+    display: inline;
+    margin-left: 0.5rem;
+    background: none;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    animation: none;
   }
 
   @keyframes gradient-fade {
