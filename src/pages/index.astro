@@ -7,7 +7,7 @@ const servicesProvidedTitle = 'Services I Offer'
 ---
 
 <BaseLayout>
-  <HomePageContentSection title={aboutTitle}>
+  <HomePageContentSection customClass='first-section-title' title={aboutTitle}>
     <p class='text-lg text-gray-600 mt-4'>
       I'm Ahmed Magdy. A software engineer, content creator, and educator passionate about programming, problem-solving,
       and technology. With over a decade of experience in the field, I have dedicated my career to teaching programming
@@ -39,3 +39,41 @@ const servicesProvidedTitle = 'Services I Offer'
     </p>
   </HomePageContentSection>
 </BaseLayout>
+<style>
+  :global(.first-section-title) {
+    font-size: 2rem; /* Adjust font size as needed */
+    font-weight: bold;
+    background: linear-gradient(to right, orange, blue);
+    background-size: 200% 100%; /* This is critical for the animation */
+    background-position: 0% 50%; /* Starting position */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-fade 2s forwards;
+    /* Add translation animation */
+    transform: translateX(-100%); /* Start from left (outside the viewport) */
+    opacity: 0; /* Start invisible */
+    animation:
+      slide-in 1s forwards,
+      gradient-fade 2s forwards 0.5s; /* First slide in, then animate gradient */
+  }
+
+  @keyframes gradient-fade {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes slide-in {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0); /* Final resting position */
+      opacity: 1;
+    }
+  }
+</style>
