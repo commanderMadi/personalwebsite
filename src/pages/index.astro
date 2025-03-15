@@ -1,16 +1,41 @@
 ---
-
+import HomePageContentSection from '../components/HomePageContentSection.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
+const aboutTitle = 'Hello there! 👋'
+const someStatsTitle = 'My Employer & Background'
+const servicesProvidedTitle = 'Services I Offer'
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <HomePageContentSection title={aboutTitle}>
+    <p class='text-lg text-gray-600 mt-4'>
+      I'm Ahmed Magdy. A software engineer, content creator, and educator passionate about programming, problem-solving,
+      and technology. With over a decade of experience in the field, I have dedicated my career to teaching programming
+      concepts in a clear and accessible way, helping thousands of learners through my previous employers and my YouTube
+      channel, <a class='text-blue-600' href='https://youtube.com/@smoothbytes'>smoothbytes</a>.
+    </p>
+  </HomePageContentSection>
+  <HomePageContentSection title={someStatsTitle}>
+    <div class='text-lg text-gray-600 mt-4'>
+      <p>🏢 Previous Company: Udacity</p>
+      <p>🏢 Current Company: <span>Toyota</span></p>
+      <p>📍 Based at: <span>Tokyo, Japan</span></p>
+      <p>👨‍💻 Years of Experience: <span>10+</span></p>
+      <p>🎓 Alma Mater: <span>Goldsmith, London</span></p>
+    </div>
+  </HomePageContentSection>
+  <HomePageContentSection title={servicesProvidedTitle}>
+    <p class='text-lg text-gray-600 mt-4'>I offer a variety of services, including:</p>
+    <ul class='list-disc list-inside text-lg text-gray-600 mt-4'>
+      <li>1:1 training</li>
+      <li>Software development</li>
+      <li>Technical writing</li>
+      <li>Content creation</li>
+      <li>Software Development Career Consulting</li>
+    </ul>
+    <p class='text-lg text-gray-600 mt-4'>
+      If you're interested in working together, please reach out
+      <a class='text-blue-600' href='mailto:ahmedmagdyanaby@gmail.com'>here</a>.
+    </p>
+  </HomePageContentSection>
+</BaseLayout>
