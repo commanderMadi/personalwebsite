@@ -1,120 +1,131 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import { getCollection } from 'astro:content'
+// Define a type for your book data (adjust properties as needed)
+type Book = {
+  title: string
+  author: string
+  year: number
+  status: 'Currently Reading' | 'Read' | string
+}
+
+// Define a type for books grouped by year and status
+type BooksByYear = {
+  [year: number]: {
+    [status: string]: Book[]
+  }
+}
+
 const allBooks = await getCollection('books')
+// Group books by year and by status
+const booksByYear = allBooks.reduce((acc, book) => {
+  // Assert the type which comes from content collections if needed
+  const { year, status } = book.data as Book
+
+  if (!acc[year]) {
+    // Initialize with expected statuses
+    acc[year] = {
+      'Currently Reading': [],
+      Read: [],
+    }
+  }
+
+  if (acc[year][status] !== undefined) {
+    acc[year][status].push(book.data as Book)
+  } else {
+    acc[year][status] = [book.data as Book]
+  }
+
+  return acc
+}, {} as BooksByYear)
+
+// Sort years in descending order
+const sortedYears = Object.keys(booksByYear)
+  .map(Number)
+  .sort((a, b) => b - a)
+
+console.log(booksByYear)
 ---
 
 <BaseLayout pageTitle='Bookshelf'>
   <div class='years-container mt-10 mb-10 mx-auto'>
     <div class='divider-container'>
-      <div class='divider mb-3 mt-3'>
-        <span>2025</span>
-      </div>
-      <div class='year_2025_books'>
-        <div class='currently_reading_books'>
-          <p class='text-gray-400 text-2xl mb-2'>Currently Reading</p>
-          <ul>
-            {
-              allBooks.map((book) => {
-                if (book.data.year === 2025 && book.data.status === 'Currently Reading') {
-                  return (
-                    <li>
-                      <span class='text-blue-600'>{book.data.title}</span> By {book.data.author}
-                    </li>
-                  )
-                }
-              })
-            }
-          </ul>
-        </div>
-        <div class='read_books'>
-          <p class='text-gray-400 text-2xl mt-3 mb-2'>Read</p>
-          <ul>
-            {
-              allBooks.map((book) => {
-                if (book.data.year === 2025 && book.data.status === 'Read') {
-                  return (
-                    <li>
-                      <span class='text-blue-600'>{book.data.title}</span> By {book.data.author}
-                    </li>
-                  )
-                }
-              })
-            }
-          </ul>
-        </div>
-        <div class='divider mb-3 mt-3'>
-          <span>2024</span>
-        </div>
-        <div class='year_2024_books'>
-          <ul>
-            {
-              allBooks.map((book) => {
-                if (book.data.year === 2024) {
-                  return (
-                    <li>
-                      <span class='text-blue-600'>{book.data.title}</span> By {book.data.author}
-                    </li>
-                  )
-                }
-              })
-            }
-          </ul>
-        </div>
-        <div class='divider mb-3 mt-3'>
-          <span>2023</span>
-        </div>
-        <div class='year_2023_books'>
-          <ul>
-            {
-              allBooks.map((book) => {
-                if (book.data.year === 2023) {
-                  return (
-                    <li>
-                      <span class='text-blue-600'>{book.data.title}</span> By {book.data.author}
-                    </li>
-                  )
-                }
-              })
-            }
-          </ul>
-        </div>
-      </div>
-
-      <style>
-        .divider-container {
-          width: 100%;
-          margin: 2rem 0;
-          text-align: center;
-        }
-
-        .divider {
-          display: flex;
-          align-items: center;
-          color: #718096; /* text-gray-600 */
-        }
-
-        .divider::before,
-        .divider::after {
-          content: '';
-          flex: 1;
-          border-bottom: 1px solid #e2e8f0; /* border-gray-300 */
-        }
-
-        .divider::before {
-          margin-right: 1rem;
-        }
-
-        .divider::after {
-          margin-left: 1rem;
-        }
-
-        .divider span {
-          font-size: 1.25rem;
-          font-weight: 600;
-          padding: 0 1rem;
-        }
-      </style>
+      {
+        sortedYears.map((year) => {
+          // Declare the variable inside the function body
+          const currentlyReadingBooks = booksByYear[year]['Currently Reading']
+          const read = booksByYear[year]['Read']
+          const currentlyReadingExists = currentlyReadingBooks?.length > 0
+          const readExists = read?.length > 0
+          return booksByYear[year] ? (
+            <>
+              <div class='mt-3 divider'>
+                <span>{year}</span>
+              </div>
+              {currentlyReadingExists && (
+                <div class='text-2xl text-gray-400 mb-2 mt-2 currently_reading'>Currently Reading</div>
+              )}
+              {currentlyReadingExists && (
+                <div class='books-list mt-2'>
+                  {currentlyReadingBooks.map((book) => (
+                    <p>
+                      <span class='text-blue-600 lg:text-xl'>{book.title}</span> by {book.author}
+                    </p>
+                  ))}
+                </div>
+              )}
+              {readExists && year === sortedYears[0] && <div class='text-2xl text-gray-400 mb-2 mt-2 read'>Read</div>}
+              {readExists && (
+                <div
+                  class='books-list mt-2
+                '
+                >
+                  {read.map((book) => (
+                    <p>
+                      <span class='text-blue-600 lg:text-xl'>{book.title}</span> by {book.author}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </>
+          ) : null
+        })
+      }
     </div>
+
+    <style>
+      .divider-container {
+        width: 100%;
+        margin: 2rem 0;
+        text-align: center;
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        color: #718096; /* text-gray-600 */
+      }
+
+      .divider::before,
+      .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #e2e8f0; /* border-gray-300 */
+      }
+
+      .divider::before {
+        margin-right: 1rem;
+      }
+
+      .divider::after {
+        margin-left: 1rem;
+      }
+
+      .divider span {
+        font-size: 1.25rem;
+        font-weight: 600;
+        padding: 0 1rem;
+      }
+    </style>
   </div>
 </BaseLayout>
