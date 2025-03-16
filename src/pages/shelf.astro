@@ -68,8 +68,8 @@ console.log(booksByYear)
               {currentlyReadingExists && (
                 <div class='books-list mt-2'>
                   {currentlyReadingBooks.map((book) => (
-                    <p>
-                      <span class='text-blue-600 lg:text-xl'>{book.title}</span> by {book.author}
+                    <p class='text-sm lg:text-xl'>
+                      <span class='text-blue-600'>{book.title}</span> by {book.author} 📖
                     </p>
                   ))}
                 </div>
@@ -81,8 +81,8 @@ console.log(booksByYear)
                 '
                 >
                   {read.map((book) => (
-                    <p>
-                      <span class='text-blue-600 lg:text-xl'>{book.title}</span> by {book.author}
+                    <p class='text-sm lg:text-xl'>
+                      <span class='text-blue-600'>{book.title}</span> by {book.author} ✅
                     </p>
                   ))}
                 </div>
